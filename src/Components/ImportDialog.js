@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import useCloseFromOutside from './Hooks/useCloseFromOutside'
+import useCloseFromOutside from '../Hooks/useCloseFromOutside'
 import SimpleWaveform from './SimpleWaveform'
 
 const api_key = 'FUeslAUEuFkf1OlIlqqLJmkOW6Cw4sQ3oKM2PtsQ'
@@ -11,7 +11,6 @@ function SearchContainer({ setSounds }) {
         try{
             const res = await fetch(`https://freesound.org/apiv2/search/text/?format=json&query=${query}&filter=license:"Creative Commons 0"&fields=name,description,samplerate,duration,previews&token=${api_key}`)
             const data = await res.json()
-            console.log(data)
             setSounds(data)
         } catch(err) {
             console.error(err)
@@ -35,7 +34,7 @@ function SearchContainer({ setSounds }) {
     )
 }
 
-function SoundList({ sounds }) {
+function SoundList({ sounds, setAudioFiles, closeDialog }) {
     const [play, setPlay] = useState({ id: -1, state: false })
 
     const handlePlay = (event, index) => {
@@ -47,10 +46,15 @@ function SoundList({ sounds }) {
         }
     }
 
+    const handleClick = (index) => {
+        setAudioFiles(prev => [...prev, sounds[index].previews['preview-hq-mp3']])
+        closeDialog()
+    }
+
     return (
         <ol className="sound-list">
             {sounds?.map((sound, index) => (
-                <li key={index} >
+                <li key={index} onClick={() => handleClick(index)}>
                     <p>{sound.duration}</p>
                     <p>{sound.name}</p>
                     <p>{sound.description}</p>
@@ -66,14 +70,18 @@ function SoundList({ sounds }) {
     )
 }
 
-export default function ImportDialog({ onDialogClose }) {
+export default function ImportDialog({ onDialogClose, setAudioFiles }) {
     const [sounds, setSounds] = useState(null)
     const ref = useCloseFromOutside(onDialogClose)
 
     return (
         <div id="import-dialog" ref={ref}>
             <SearchContainer setSounds={setSounds} />
-            <SoundList sounds={sounds?.results} />
+            <SoundList 
+                sounds={sounds?.results} 
+                setAudioFiles={setAudioFiles}
+                closeDialog={onDialogClose}
+            />
         </div>
     )
 }

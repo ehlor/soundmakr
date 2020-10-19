@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
-import ImportDialog from './ImportDialog'
-import AudioContainer from './AudioContainer'
+import ImportDialog from './Components/ImportDialog'
+import AudioContainer from './Components/AudioContainer'
 import FormatSelector from './Components/FormatSelector'
 import ButtonExport from './Components/ButtonExport'
+import { useToolbarStore } from './GlobalState'
+import shallow from 'zustand/shallow'
 
 export default function App() {
-    const [isImportDialogOpen, setIsImportDialogOpen] = useState(false)
-    const [isSamplePlaying, setIsSamplePlaying] = useState(false)
-    const [isTrimmingOn, setIsTrimmingOn] = useState(false)
-    const [isOkClicked, setIsOkClicked] = useState(false)
+    const [isImportDialogOpen, setIsImportDialogOpen] = useToolbarStore(state => [state.isImportDialogOpen, state.setIsImportDialogOpen], shallow)
+    const [isSamplePlaying, setIsSamplePlaying] = useToolbarStore(state => [state.isSamplePlaying, state.setIsSamplePlaying], shallow)
+    const [isTrimmingOn, setIsTrimmingOn] = useToolbarStore(state => [state.isTrimmingOn, state.setIsTrimmingOn], shallow)
+    const [isOkClicked, setIsOkClicked] = useToolbarStore(state => [state.isOkClicked, state.setIsOkClicked], shallow)
     const [audioFileUrl, setAudioFileUrl] = useState(null)
     const [audioFileFormat, setAudioFileFormat] = useState('.wav')
+    const [audioFiles, setAudioFiles] = useState([])
 
     const handleTrimFinished = (isOkClicked) => {
         setIsTrimmingOn(false)
@@ -38,8 +41,14 @@ export default function App() {
                     {isTrimmingOn && <button onClick={() => handleTrimFinished(false)}>Cancel</button>}
                 </div>
             </div>
-            {isImportDialogOpen && <ImportDialog onDialogClose={() => setIsImportDialogOpen(false)}/>}
+            {isImportDialogOpen && 
+                <ImportDialog 
+                    onDialogClose={() => setIsImportDialogOpen(false)}
+                    setAudioFiles={setAudioFiles}
+                />
+            }
             <AudioContainer
+                audioFiles={audioFiles}
                 onPlayFinish={() => setIsSamplePlaying(false)}
                 setAudioFileUrl={setAudioFileUrl} 
                 isSamplePlaying={isSamplePlaying}

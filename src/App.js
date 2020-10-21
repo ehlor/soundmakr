@@ -10,7 +10,9 @@ export default function App() {
     const [isImportDialogOpen, setIsImportDialogOpen] = useToolbarStore(state => [state.isImportDialogOpen, state.setIsImportDialogOpen], shallow)
     const [isSamplePlaying, setIsSamplePlaying] = useToolbarStore(state => [state.isSamplePlaying, state.setIsSamplePlaying], shallow)
     const [isTrimmingOn, setIsTrimmingOn] = useToolbarStore(state => [state.isTrimmingOn, state.setIsTrimmingOn], shallow)
-    const [isOkClicked, setIsOkClicked] = useToolbarStore(state => [state.isOkClicked, state.setIsOkClicked], shallow)
+    const [isMovingOn, setIsMovingOn] = useToolbarStore(state => [state.isMovingOn, state.setIsMovingOn], shallow)
+    const setIsOkClicked = useToolbarStore(state => state.setIsOkClicked)
+
     const [audioFileUrl, setAudioFileUrl] = useState(null)
     const [audioFileFormat, setAudioFileFormat] = useState('.wav')
     const [audioFiles, setAudioFiles] = useState([])
@@ -27,8 +29,9 @@ export default function App() {
                 <div id="tool-container">
                     <button onClick={() => setIsImportDialogOpen(true)}>Web</button>
                     <button>PC</button>
-                    <button onClick={() => setIsSamplePlaying(prev => !prev)}>Play</button>
-                    <button onClick={() => setIsTrimmingOn(prev => !prev)}>Trim</button>
+                    <button onClick={() => setIsSamplePlaying(!isSamplePlaying)}>Play</button>
+                    <button onClick={() => setIsTrimmingOn(!isTrimmingOn)}>Trim</button>
+                    <button onClick={() => setIsMovingOn(!isMovingOn)}>Move</button>
                     <FormatSelector 
                         audioFileFormat={audioFileFormat}
                         setAudioFileFormat={setAudioFileFormat}
@@ -49,11 +52,7 @@ export default function App() {
             }
             <AudioContainer
                 audioFiles={audioFiles}
-                onPlayFinish={() => setIsSamplePlaying(false)}
                 setAudioFileUrl={setAudioFileUrl} 
-                isSamplePlaying={isSamplePlaying}
-                isTrimmingOn={isTrimmingOn}
-                isOkClicked={isOkClicked}
             />
         </div>
     )

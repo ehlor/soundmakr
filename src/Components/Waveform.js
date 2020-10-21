@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react'
 import WaveSurfer from 'wavesurfer.js'
-import { useAudioContainerStore } from '../GlobalState'
+import { useAudioContainerStore, useToolbarStore } from '../GlobalState'
+import shallow from 'zustand/shallow'
 
 export default function Waveform(props) {
     const wavesurfer = useRef()
     const waveformRef = useRef()
     const prevAudioBuffer = useRef()
     const audioContainer = useAudioContainerStore()
+    const [isSamplePlaying, setIsSamplePlaying] = useToolbarStore(state => [state.isSamplePlaying, state.setIsSamplePlaying], shallow)
+    const [isMovingOn, selectedAudio] = useToolbarStore(state => [state.isMovingOn, state.selectedAudio], shallow)
     const [width, setWidth] = useState(null)
     
     useEffect(() => {
@@ -17,16 +20,21 @@ export default function Waveform(props) {
             audioContext: props.audioContext
         }))
         wavesurfer.current.on('finish', () => {
-            props.onPlayFinish()
+            setIsSamplePlaying(false)
         })
         wavesurfer.current.on('ready', () => {
             audioContainer.setWidth(wavesurfer.current.getDuration())
         })
+        wavesurfer.current.toggleInteraction()
         return () => {
             delete wavesurfer.current.backend
             wavesurfer.current.destroy()
         }
     }, [])
+
+    useEffect(() => {
+        wavesurfer.current.toggleInteraction()
+    }, [isMovingOn])
 
     useEffect(() => {
         if(prevAudioBuffer.current !== props.audioBuffer) {
@@ -45,13 +53,19 @@ export default function Waveform(props) {
         } 
         wavesurfer.current.drawBuffer()
     }, [width])
-
+/*
     const play = () => {
         if (wavesurfer.current === undefined) return
-        if (props.isSamplePlaying) wavesurfer.current.play()
+        if (isSamplePlaying && selectedAudio === props.id) wavesurfer.current.play()
         else wavesurfer.current.pause()
     }
     play()
+*/
+    useEffect(() => {
+        if (wavesurfer.current === undefined) return
+        if (isSamplePlaying && selectedAudio === props.id) wavesurfer.current.play()
+        else wavesurfer.current.pause()
+    }, [isSamplePlaying])
 
     return (
         <div 

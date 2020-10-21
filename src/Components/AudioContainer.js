@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import AudioItem from './AudioItem'
 import { useAudioContainerStore } from '../GlobalState'
 
-export default function AudioContainer(props) {
-    const { audioFiles, onPlayFinish, setAudioFileUrl,
-        isSamplePlaying, isTrimmingOn, isOkClicked } = props
+export default function AudioContainer({ audioFiles, setAudioFileUrl }) {
+    const mainAudioContext = useRef(() => new AudioContext({ sampleRate: 44100 }))
     const modifyWidth = useAudioContainerStore(state => state.modifyWidth)
 
     const zoomContainer = (event) => {
@@ -17,12 +16,9 @@ export default function AudioContainer(props) {
             {audioFiles.map((url, index) => (
                 <AudioItem
                     key={index}
+                    id={index}
                     url={url}
-                    onPlayFinish={onPlayFinish}
                     setAudioFileUrl={setAudioFileUrl} 
-                    isSamplePlaying={isSamplePlaying}
-                    isTrimmingOn={isTrimmingOn}
-                    isOkClicked={isOkClicked}
                 />
             ))}
         </div>

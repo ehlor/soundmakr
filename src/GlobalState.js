@@ -22,9 +22,13 @@ export const useToolbarStore = create(set => ({
     isImportDialogOpen: false,
     isSamplePlaying: false,
     isTrimmingOn: false,
+    isMovingOn: false,
     isOkClicked: false,
+    selectedAudio: -1,
     setIsImportDialogOpen: (bool) => set({ isImportDialogOpen: bool }),
     setIsSamplePlaying: (bool) => set({ isSamplePlaying: bool }),
     setIsTrimmingOn: (bool) => set({ isTrimmingOn: bool }),
-    setIsOkClicked: (bool) => set({ isOkClicked: bool })
+    setIsMovingOn: (bool) => set({ isMovingOn: bool }),
+    setIsOkClicked: (bool) => set({ isOkClicked: bool }),
+    setSelectedAudio: (id) => set({ selectedAudio: id })
 }))

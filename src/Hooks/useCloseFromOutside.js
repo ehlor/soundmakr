@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 export default function useCloseFromOutside(onClose) {
     const ref = useRef()

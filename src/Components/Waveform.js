@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import WaveSurfer from 'wavesurfer.js'
-import { useAudioContainerStore, useToolbarStore } from '../GlobalState'
 import shallow from 'zustand/shallow'
+
+import { useAudioContainerStore, useToolbarStore, useEffectsStore } from '../GlobalState'
+import styles from '../Styles/Waveform.module.css'
 
 export default function Waveform(props) {
     const wavesurfer = useRef()
@@ -10,6 +12,7 @@ export default function Waveform(props) {
     const audioContainer = useAudioContainerStore()
     const [isSamplePlaying, setIsSamplePlaying] = useToolbarStore(state => [state.isSamplePlaying, state.setIsSamplePlaying], shallow)
     const [isMovingOn, selectedAudio] = useToolbarStore(state => [state.isMovingOn, state.selectedAudio], shallow)
+    const filters = useEffectsStore(state => state.nodes[props.id].gain)
     const [width, setWidth] = useState(null)
     
     useEffect(() => {
@@ -17,8 +20,12 @@ export default function Waveform(props) {
             container: waveformRef.current,
             barWidth: 2,
             responsive: true,
+            progressColor: '#1d98fd',
+            cursorColor: '#303030',
+            waveColor: '#fafafa',
             audioContext: props.audioContext
         }))
+        wavesurfer.current.backend.setFilter(filters)
         wavesurfer.current.on('finish', () => {
             setIsSamplePlaying(false)
         })
@@ -26,9 +33,14 @@ export default function Waveform(props) {
             audioContainer.setWidth(wavesurfer.current.getDuration())
         })
         wavesurfer.current.toggleInteraction()
-        return () => {
+        const destroy = () => {
             delete wavesurfer.current.backend
             wavesurfer.current.destroy()
+        }
+        window.addEventListener('beforeunload', destroy);
+        return () => {
+            destroy()
+            window.removeEventListener('beforeunload', destroy)
         }
     }, [])
 
@@ -52,15 +64,9 @@ export default function Waveform(props) {
             wavesurfer.current.seekTo(0)
         } 
         wavesurfer.current.drawBuffer()
+        props.setWaveformWidth(waveformRef.current.scrollWidth)
     }, [width])
-/*
-    const play = () => {
-        if (wavesurfer.current === undefined) return
-        if (isSamplePlaying && selectedAudio === props.id) wavesurfer.current.play()
-        else wavesurfer.current.pause()
-    }
-    play()
-*/
+
     useEffect(() => {
         if (wavesurfer.current === undefined) return
         if (isSamplePlaying && selectedAudio === props.id) wavesurfer.current.play()
@@ -69,7 +75,12 @@ export default function Waveform(props) {
 
     return (
         <div 
-            style={{ marginLeft: props.posX, width: `${width}%` }}
+            className={styles.waveform}
+            style={{ 
+                marginLeft: props.posX, 
+                width: `${width}%`,
+                backgroundColor: selectedAudio === props.id ? 'rgb(80, 80, 92)' : 'rgb(92, 92, 92)'
+            }}
             ref={waveformRef} 
             onMouseDown={props.onMouseDown}
             onMouseUp={props.onMouseUp}

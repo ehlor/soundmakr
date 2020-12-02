@@ -1,0 +1,11 @@
+.audioItem {
+    position: relative;
+    height: var(--audioItemHeight);
+}
+
+.trimBlock {
+    position: absolute;
+    z-index: 80;
+    background-color: #ff3c4371;
+    height: 100%;
+}

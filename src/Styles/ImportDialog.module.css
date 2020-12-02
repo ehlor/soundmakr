@@ -1,0 +1,135 @@
+#importDialogBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 99;
+}
+
+#importDialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    width: 60vw;
+    height: 80vh;
+    background-color: var(--background-color);
+    border-radius: 7px;
+    z-index: 100;
+    overflow: auto;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+#searchContainer {
+    display: flex;
+    height: 40px;
+    background-color: var(--gray-color);
+    border-radius: 3px;
+    margin: 10px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+}
+
+.searchbar {
+    width: 100%;
+    padding: 0 5px 0 15px;
+    border-radius: 3px 0 0 3px;
+    outline: none;
+    appearance: none;   
+    border: 0;
+    background-color: var(--gray-color);
+    color: var(--light-color);
+    font-size: 1.3rem;
+}
+
+::placeholder {
+    color: rgb(192, 192, 192);
+}
+
+.searchButton {
+    width: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 3px 3px 0;
+    background-color: var(--gray-color);
+}
+
+.searchButton svg {
+    color: var(--light-color);
+}
+
+.soundList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 10px;
+}
+
+.soundInfo {
+    display: grid;
+    grid-template-columns: 70px 1fr 1fr auto;
+    height: 55px;
+}
+
+.soundInfo p:first-child {
+    align-self: center;
+    justify-self: center;
+}
+
+.soundNameDescription {
+    padding-right: 8px;
+	overflow: hidden;
+    white-space: normal;
+	text-overflow: ellipsis;
+}
+
+.soundNameDescription p:first-child {
+    margin-bottom: 2px;
+    overflow: hidden;
+    white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.soundNameDescription p:first-child, .soundInfo p:first-child {
+    font-weight: 700;
+}
+
+.soundNameDescription p:last-child {
+    font-size: 0.8rem;
+    color: rgb(226, 226, 226);
+}
+
+.buttonContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 5px;
+}
+
+.button {
+    width: 24px;
+    height: 24px;
+    border-radius: 3px;
+}
+
+.navButtonContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.navButton {
+    height: 30px;
+    width: 80px;
+    border-radius: 3px;
+    font-weight: 500;
+    letter-spacing: 0.15rem;
+    background-color: var(--primary-color);
+    color: var(--light-color);
+    cursor: default;
+}

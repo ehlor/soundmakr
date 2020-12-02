@@ -1,0 +1,18 @@
+#audioContainer {
+    border-radius: 6px;
+    background-color: var(--gray-color);
+    /* max-height: calc(var(--audioItemHeight)*3);
+    min-height: calc(var(--audioItemHeight));
+    height: fit-content; */
+    margin: 7vh 40px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    --audioItemHeight: 15vh;
+    --scrollbarHeight: 10px;
+}
+
+#progressBar {
+    position: absolute;
+    z-index: 90;
+    width: 2px;
+    box-shadow : -2px 0 0 0 var(--primary-color);
+}

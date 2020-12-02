@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import useCloseFromOutside from '../Hooks/useCloseFromOutside'
+import styles from '../Styles/Toolbar.module.css'
 
 export default function FormatSelector({ audioFileFormat, setAudioFileFormat }) {
     const [isOpen, setIsOpen] = useState(false)
@@ -7,12 +8,16 @@ export default function FormatSelector({ audioFileFormat, setAudioFileFormat }) 
 
     return (
         <div 
-            className="format-selector" 
+            className={`${styles.formatSelector} ${styles.format}`}
             onClick={() => setIsOpen(prev => !prev)}
-            ref={ref}>
+            ref={ref}
+        >
             {audioFileFormat}
             {isOpen &&
-                <ol onClick={(e) => setAudioFileFormat(e.target.innerHTML)}>
+                <ol 
+                    className={`${styles.formatOptions} ${styles.format}`}
+                    onClick={(e) => setAudioFileFormat(e.target.innerHTML)}
+                >
                     <li>.wav</li>
                     <li>.mp3</li>
                 </ol>

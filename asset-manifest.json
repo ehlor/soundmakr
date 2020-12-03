@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/soundmakr/static/css/main.8664d01a.chunk.css",
+    "main.js": "/soundmakr/static/js/main.6b87dabd.chunk.js",
+    "main.js.map": "/soundmakr/static/js/main.6b87dabd.chunk.js.map",
+    "runtime-main.js": "/soundmakr/static/js/runtime-main.c5b79f65.js",
+    "runtime-main.js.map": "/soundmakr/static/js/runtime-main.c5b79f65.js.map",
+    "static/js/2.fb83bee6.chunk.js": "/soundmakr/static/js/2.fb83bee6.chunk.js",
+    "static/js/2.fb83bee6.chunk.js.map": "/soundmakr/static/js/2.fb83bee6.chunk.js.map",
+    "index.html": "/soundmakr/index.html",
+    "precache-manifest.d3bb453d2f86eb556f70a9e50378eb12.js": "/soundmakr/precache-manifest.d3bb453d2f86eb556f70a9e50378eb12.js",
+    "service-worker.js": "/soundmakr/service-worker.js",
+    "static/css/main.8664d01a.chunk.css.map": "/soundmakr/static/css/main.8664d01a.chunk.css.map",
+    "static/js/2.fb83bee6.chunk.js.LICENSE.txt": "/soundmakr/static/js/2.fb83bee6.chunk.js.LICENSE.txt",
+    "static/media/App.module.css": "/soundmakr/static/media/Roboto-Regular.11eabca2.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c5b79f65.js",
+    "static/js/2.fb83bee6.chunk.js",
+    "static/css/main.8664d01a.chunk.css",
+    "static/js/main.6b87dabd.chunk.js"
+  ]
+}

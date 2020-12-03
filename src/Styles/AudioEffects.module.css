@@ -33,8 +33,16 @@ p {
 }
 
 .filter > div, #gain {
-    width: calc(max(var(--maxFilterWidth), var(--height)/4 - 3*var(--gap)/4) + var(--infoWidth));
+    width: max(calc(var(--maxFilterWidth) + var(--infoWidth)), 
+        calc(var(--height)/4 - 3*var(--gap)/4 + var(--infoWidth)));
 }
+
+/* width: calc(
+        max(
+            var(--maxFilterWidth), 
+            calc(var(--height)/4 - 3*var(--gap)/4)
+        ) + var(--infoWidth)
+    ); */
 
 .label {
     font-family: 'Raleway';
@@ -98,8 +106,8 @@ p {
 }
 
 .knobContainer {
-    width: max(var(--maxFilterWidth), var(--height)/4 - 3*var(--gap)/4);
-    height: max(var(--maxFilterWidth), var(--height)/4 - 3*var(--gap)/4);
+    width: max(var(--maxFilterWidth), calc(var(--height)/4 - 3*var(--gap)/4));
+    height: max(var(--maxFilterWidth), calc(var(--height)/4 - 3*var(--gap)/4));
     background-color: var(--primary-color);
     border-radius: 50%;
     box-shadow: 0 1px 1px rgba(255, 255, 255, 0.3) inset, 
@@ -123,8 +131,8 @@ p {
     width: 8px;
     background-color: var(--mid-dark-color);
     background: linear-gradient(to top, 
-        var(--secondary-color) var(--size, 50%), 
-        var(--primary-color) var(--size, 50%));
+        var(--secondary-color) var(--size), 
+        var(--primary-color) var(--size));
     border-radius: 2px;
 }
 

@@ -1,4 +1,5 @@
 {
+  "homepage": "http://ehlor.github.io/soundmakr",
   "name": "sound-maker",
   "version": "0.1.0",
   "private": true,
@@ -20,6 +21,8 @@
     "zustand": "^3.1.3"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
